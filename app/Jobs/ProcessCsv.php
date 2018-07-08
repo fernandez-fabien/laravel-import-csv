@@ -48,24 +48,24 @@ class ProcessCsv implements ShouldQueue
                 $durationConsumed = DateTime::createFromFormat("H:i:s", $row[5]) ?: null;
                 $durationBilled = DateTime::createFromFormat("H:i:s", $row[6]) ?: null;
 
-                User::firstOrCreate(["id" => $row[2]]);
+                $user = User::firstOrCreate(["id" => intval($row[2])]);
 
-                if (strpos($row[7], 'appel')) {
+                if (strpos($row[7], 'appel') !== false) {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_CALL)->first()->id;
-                } elseif (strpos($row[7], 'connexion')) {
+                } elseif (strpos($row[7], 'connexion') !== false) {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_CONNECTION)->first()->id;
                 } else {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_MESSAGE)->first()->id;
                 }
 
                 Service::firstOrCreate([
-                    "subscriber" => $row[2],
                     "made_at" => Carbon::createFromFormat("d/m/Y H:i:s", $row[3] . ' ' . $row[4])->toDateTimeString(),
                     "duration_consumed" => $durationConsumed,
                     "duration_billed" => $durationBilled,
                     "volume_consumed" => $durationConsumed ? null : $row[5],
                     "volume_billed" => $durationBilled ? null : $row[6],
-                    "type" => $serviceType
+                    "service_type_id" => $serviceType,
+                    "suscriber" => intval($row[2])
                 ]);
             });
         });
