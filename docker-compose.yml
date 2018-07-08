@@ -6,6 +6,16 @@ services:
     image: laravel-gac
     depends_on:
       - mysql
+      - redis
+    volumes:
+      - ./:/application:cached
+
+  horizon:
+    build: ./provisioning
+    image: laravel-import-csv
+    command: php artisan horizon
+    depends_on:
+      - mysql
     volumes:
       - ./:/application:cached
 
@@ -28,3 +38,8 @@ services:
       - ./:/application:cached
     depends_on:
       - test-server
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
