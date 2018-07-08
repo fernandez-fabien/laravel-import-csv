@@ -11,3 +11,5 @@
 */
 Route::redirect('/', '/csv');
 Route::resource('csv', 'CsvController');
+
+Route::resource('stats', 'StatsController', ['only' => ['index']]);
