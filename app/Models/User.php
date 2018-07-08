@@ -13,4 +13,12 @@ class User extends Model
     protected $fillable = [
         'id',
     ];
+
+    /**
+     * Get the services of this service type.
+     */
+    public function services()
+    {
+        return $this->hasMany('App\Models\Service', 'suscriber');
+    }
 }

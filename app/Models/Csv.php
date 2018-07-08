@@ -24,13 +24,4 @@ class Csv extends Model
         'extension',
         'processed'
     ];
-    
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'processed' => 'boolean',
-    ];
 }
