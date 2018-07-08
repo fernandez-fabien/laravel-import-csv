@@ -17,10 +17,10 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             
             $table->datetime("made_at");
-            $table->decimal("volume_consumed");
-            $table->time("duration_consumed");
-            $table->decimal("volume_billed");
-            $table->time("duration_billed");
+            $table->float("volume_consumed")->nullable();
+            $table->time("duration_consumed")->nullable();
+            $table->float("volume_billed")->nullable();
+            $table->time("duration_billed")->nullable();
             
             $table->unsignedInteger('service_type_id');
             $table->foreign('service_type_id')->references('id')->on('service_types');

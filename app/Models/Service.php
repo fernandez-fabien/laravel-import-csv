@@ -12,13 +12,13 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 
-        'time', 
-        'real_volume', 
-        'real_duration', 
-        'billed_volume', 
-        'billed_duration',
+        'made_at', 
+        'volume_consumed', 
+        'duration_consumed', 
+        'volume_billed', 
+        'duration_billed', 
         'service_type_id',
+        'suscriber',
     ];
 
     /**
