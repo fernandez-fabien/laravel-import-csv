@@ -9,7 +9,7 @@ return array(
         | Enable/Disable cell caching
         |--------------------------------------------------------------------------
         */
-        'enable'   => true,
+        'enable'   => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ return array(
         */
         'settings' => [
 
-            'memoryCacheSize' => '32MB',
+            'memoryCacheSize' => '640MB',
             'cacheTime'       => 600
 
         ],
@@ -371,7 +371,7 @@ return array(
         |
         */
 
-        'heading'                 => 'slugged',
+        'heading'                 => 'slugged_with_count',
 
         /*
         |--------------------------------------------------------------------------
@@ -383,7 +383,7 @@ return array(
         |
         */
 
-        'startRow'                => 1,
+        'startRow'                => 3,
 
         /*
         |--------------------------------------------------------------------------
@@ -428,7 +428,7 @@ return array(
         |
         */
 
-        'to_ascii'                => true,
+        'to_ascii'                => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -530,9 +530,9 @@ return array(
             |
             */
 
-            'test' => [
+            'Untitled Spreadsheet' => [
 
-                'firstname' => 'A2'
+                "N° Facture" => 'A3'
 
             ]
 

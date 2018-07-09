@@ -41,31 +41,29 @@ class ProcessCsv implements ShouldQueue
     public function handle()
     {
         $csv = $this->csv;
-        Excel::load(storage_path("app/" . $csv->filepath), function($reader) use ($csv) {
-            $reader->skipRows(3);
-            $reader->noHeading();
-            $reader->get()->each(function($row) use ($csv) {
-                $durationConsumed = DateTime::createFromFormat("H:i:s", $row[5]) ?: null;
-                $durationBilled = DateTime::createFromFormat("H:i:s", $row[6]) ?: null;
+        Excel::filter('chunk')->load(storage_path("app/files/tickets_appels_201202.csv"))->chunk(200, function($reader) use ($csv) {
+            $reader->each(function($row) use ($csv) {
+                $durationConsumed = DateTime::createFromFormat("H:i:s", $row['_3']) ?: null;
+                $durationBilled = DateTime::createFromFormat("H:i:s", $row['_4']) ?: null;
 
-                $user = User::firstOrCreate(["id" => intval($row[2])]);
+                $user = User::firstOrCreate(["id" => intval($row['_2'])]);
 
-                if (strpos($row[7], 'appel') !== false) {
+                if (strpos($row['type'], 'appel') !== false) {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_CALL)->first()->id;
-                } elseif (strpos($row[7], 'connexion') !== false) {
+                } elseif (strpos($row['type'], 'connexion') !== false) {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_CONNECTION)->first()->id;
                 } else {
                     $serviceType = ServiceType::where('title', ServiceType::SERVICE_TYPE_MESSAGE)->first()->id;
                 }
 
                 Service::firstOrCreate([
-                    "made_at" => Carbon::createFromFormat("d/m/Y H:i:s", $row[3] . ' ' . $row[4])->toDateTimeString(),
+                    "made_at" => Carbon::createFromFormat("d/m/Y H:i:s", $row['date'] . ' ' . $row['heure'])->toDateTimeString(),
                     "duration_consumed" => $durationConsumed,
                     "duration_billed" => $durationBilled,
-                    "volume_consumed" => $durationConsumed ? null : $row[5],
-                    "volume_billed" => $durationBilled ? null : $row[6],
+                    "volume_consumed" => $durationConsumed ? null : $row['_3'],
+                    "volume_billed" => $durationBilled ? null : $row['_4'],
                     "service_type_id" => $serviceType,
-                    "suscriber" => intval($row[2])
+                    "suscriber" => intval($row['_2'])
                 ]);
             });
         });
