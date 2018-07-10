@@ -8,6 +8,7 @@ services:
       - mysql
       - redis
     volumes:
+      - ./provisioning/php.ini:/usr/local/etc/php/conf.d/php.ini:cached
       - ./:/application:cached
 
   horizon:
