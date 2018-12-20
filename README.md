@@ -1,4 +1,4 @@
-# Test technique - GAC TECHNOLOGY - Fabien Fernandez
+# Test technique - Fabien Fernandez
 
 ## Installation
 
